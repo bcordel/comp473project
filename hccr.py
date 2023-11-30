@@ -104,8 +104,10 @@ class ImageClassifier(nn.Module):
             nn.ReLU(),
             nn.Conv2d(8, 16, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
+            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(16 * 256 * 256, 32),
+            nn.Linear(8 * 32 * 32, 32),
             nn.ReLU(),
             nn.Linear(32, 3755)
         )
