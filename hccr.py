@@ -97,21 +97,17 @@ class ChineseDataset(Dataset):
 class ImageClassifier(nn.Module):
     def __init__(self):
         super().__init__()
- self.model = nn.Sequential(
+        self.model = nn.Sequential(
             nn.Conv2d(1, 4, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2), 
             nn.Conv2d(4, 8, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),  
             nn.Conv2d(8, 16, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),  
             nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2), 
             nn.Flatten(),
-            nn.Linear(16 * 256 * 256, 32, 32),
+            nn.Linear(32 * 256 * 256, 32, 32),
             nn.ReLU(),
             nn.Linear(32, 3755)
         )
