@@ -9,106 +9,102 @@ Normalization-cooperated method to generate directMaps:
 **Gradient elements of the original images are directly mapped to directMaps of standard image size
 """
 import numpy as np
-from PIL import Image, ImageFilter
 import os
-from io import BytesIO
+from PIL import Image
+import cv2
+import matplotlib.pyplot as plt
+
+# Takes in a np array and returns image with reversed gray levels
+def reverse_gray_levels(image_array):
+    reversed_array = 255 - image_array
+    return reversed_array
 
 
-# Takes in a byte array and returns image with reversed gray levels
-def reverse_gray_levels(byte_array):
-    return bytearray([255 - pixel for pixel in byte_array])
-
-
-def sobel_operator(image):
-    # Apply the Sobel operator to compute the gradient
-    gradient_x = image.filter(ImageFilter.FIND_EDGES).convert('L')
-    gradient_y = image.filter(ImageFilter.FIND_EDGES).convert('L').transpose(Image.Transpose.ROTATE_270)
-
-    return gradient_x, gradient_y
-
-
-def direction_decomposition(gradient_x, gradient_y, output_size=(64, 64)):
-    # Compute the direction maps by decomposing the gradient
-    direction_maps = []
-    for i in range(8):
-        angle = i * (360 / 8)  # Compute the angle for each chaincode direction
-        direction_x = gradient_x * np.cos(np.radians(angle))
-        direction_y = gradient_y * np.sin(np.radians(angle))
-        direction_map = np.sqrt(direction_x**2 + direction_y**2)
-        direction_map = Image.fromarray(direction_map)
-        direction_map = direction_map.resize(output_size)
-        direction_map.show()
-        direction_maps.append(direction_map)
-
-    return direction_maps
-
-
-def resize_image(image, new_size=(64, 64)):
-    # Normalize image (needed?)
-    # normalized_image = np.array(transposed_image) / 255.0
+def resize_image(image, new_size=(32, 32)):
     return image.resize(new_size)
 
 
-def gnt_read_images(file_name):
-    image_data = []
-    samples = []
-    labels = []
-    num_classes = 0
-
+def gnt_convert_images(file_name, save_name):
     try:
         with open(file_name, 'rb') as image_file:
-
+            num = 0
             file_length = os.path.getsize(file_name)
 
             # While current cursor spot is less than length
             while image_file.tell() < file_length:
                 # skip length of image (we get this from w x h
-                int.from_bytes(image_file.read(4), byteorder='little')
+                image_file.read(4)
                 # image label
                 label = image_file.read(2)
                 # image dimensions
                 width = int.from_bytes(image_file.read(2), byteorder='little')
                 height = int.from_bytes(image_file.read(2), byteorder='little')
                 # byte array of gray-scale image
-                byte_array = bytearray(image_file.read(width * height))
-                byte_array = reverse_gray_levels(byte_array)
+                byte_array = image_file.read(width * height)
+                image_array = np.frombuffer(byte_array, dtype=np.uint8)
+                image_array = image_array.reshape((height, width))
+                reversed_array = reverse_gray_levels(image_array)
 
-                # Convert to image
-                image = Image.frombytes('L', (width, height), byte_array)
+                image = Image.fromarray(reversed_array)
 
-                # Resize and normalize image
                 resized_image = resize_image(image)
 
-                # Generate directMap from image
-                gradient_x, gradient_y = sobel_operator(resized_image)
-                directmap_images = direction_decomposition(gradient_x, gradient_y)
+                # Save as JPG with same num as label
+                if not os.path.exists(f"./data/gnt-jpg/train/{save_name}-{num}.jpg"):
+                    resized_image.save(f"./data/gnt-jpg/train/{save_name}-{num}.jpg")
 
-                # Append to the sample and label arrays
-                samples.append(directmap_images)
+                # Save label
                 labels.append(label)
-
-            num_classes = len(set(labels))
-            image_data.append(num_classes)
-            image_data.append(samples)
-            image_data.append(labels)
+                num+=1
 
     except FileNotFoundError as e:
         print(f"Error: {e}")
     except Exception as e:
         print(f"An error occurred: {e}")
 
-    return image_data
+    return labels
 
 
-def open_images(image_data, num):
-    for i in range(num):
-        image_data[1][0][i].show()
-    print(len(image_data[1]))
+def read_labels(file_name):
+    labels = []
+
+    try:
+        with open(file_name, 'rb') as image_file:
+            file_length = os.path.getsize(file_name)
+
+            # While current cursor spot is less than length
+            while image_file.tell() < file_length:
+                # skip length of image (we get this from w x h
+                image_file.read(4)
+                # image label
+                label = image_file.read(2)
+                # image dimensions
+                width = int.from_bytes(image_file.read(2), byteorder='little')
+                height = int.from_bytes(image_file.read(2), byteorder='little')
+                # byte array of gray-scale image
+                image_file.read(width * height)
+
+                # Save label
+                labels.append(label)
+
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    return labels
 
 
-file_path = "./data/competition-gnt/C001-f-f.gnt"
-images = gnt_read_images(file_path)
-open_images(images, 8)
+if __name__ == "__main__":
+
+    labels = []
+
+    # Convert Files If Needed
+    for file in os.listdir("./data/temp"):
+        file_path = f"./data/temp/{file}"
+        save_name = file[:4]
+        labels.append(gnt_convert_images(file_path, save_name))
+        # labels.append(read_labels(file_path))
+
 
 
 
