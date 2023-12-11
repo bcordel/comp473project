@@ -65,35 +65,6 @@ def gnt_convert_images(file_name, save_name):
     return labels
 
 
-def read_labels(file_name):
-    labels = []
-
-    try:
-        with open(file_name, 'rb') as image_file:
-            file_length = os.path.getsize(file_name)
-
-            # While current cursor spot is less than length
-            while image_file.tell() < file_length:
-                # skip length of image (we get this from w x h
-                image_file.read(4)
-                # image label
-                label = image_file.read(2)
-                # image dimensions
-                width = int.from_bytes(image_file.read(2), byteorder='little')
-                height = int.from_bytes(image_file.read(2), byteorder='little')
-                # byte array of gray-scale image
-                image_file.read(width * height)
-
-                # Save label
-                labels.append(label)
-
-    except FileNotFoundError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    return labels
-
-
 if __name__ == "__main__":
 
     labels = []
@@ -102,7 +73,7 @@ if __name__ == "__main__":
     for file in os.listdir("./data/temp"):
         file_path = f"./data/temp/{file}"
         save_name = file[:4]
-        labels.append(gnt_convert_images(file_path, save_name))
+        labels.append(gnt_convert_images(file_path, save_name)) # convert gnt to jpg
         # labels.append(read_labels(file_path))
 
 

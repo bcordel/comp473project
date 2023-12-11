@@ -7,6 +7,8 @@ import cv2
 import os
 import numpy as np
 
+torch.cuda.set_per_process_memory_fraction(0.9)
+torch.cuda.empty_cache()
 
 def sobel_gradient(image):
     # Compute gradient using Sobel operator
@@ -36,11 +38,50 @@ def preprocess(image):
     return magnitude
 
 
+def create_label_dict(dir_name):
+    label_dict = {}
+
+    for file in os.listdir(dir_name):
+        file_name = os.path.join(dir_name, file)
+        num = 0
+        try:
+            with open(file_name, 'rb') as image_file:
+                # Get length of file
+                file_length = os.path.getsize(file_name)
+
+                # While current cursor spot is less than length
+                while image_file.tell() < file_length:
+                    # Skip length of image (we get this from w x h)
+                    image_file.read(4)
+
+                    # Get label
+                    label = image_file.read(2)
+
+                    # Get image dimensions
+                    width = int.from_bytes(image_file.read(2), byteorder='little')
+                    height = int.from_bytes(image_file.read(2), byteorder='little')
+
+                    # Get byte array of gray-scale image
+                    image_file.read(width * height)
+
+                    # Save label
+                    entry_name = f"{os.path.basename(file_name)[:4]}-{num}.jpg"
+                    label_dict[entry_name] = label.decode("GBK")
+                    num += 1
+
+        except FileNotFoundError as e:
+            print(f"Error: {e}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+    return label_dict
+
+
 # Custom dataset class
-class CustomDataset(Dataset):
-    def __init__(self, folder_path):
+class ChineseDataset(Dataset):
+    def __init__(self, folder_path, label_dict):
         self.folder_path = folder_path
         self.image_files = os.listdir(folder_path)
+        self.label_dict = label_dict
         self.transform = transforms.Compose([transforms.ToTensor()])  # Convert images to PyTorch tensors
 
     def __len__(self):
@@ -48,84 +89,106 @@ class CustomDataset(Dataset):
 
     def __getitem__(self, idx):
         image_path = os.path.join(self.folder_path, self.image_files[idx])
-        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)  # Assuming images are grayscale
+        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
         image = preprocess(image)
         image = self.transform(image)
-
-        # Extract the label from the filename or folder structure if applicable
-        # Replace this with your actual label extraction logic
-        # TODO
-        label = int(image_path.split(os.sep)[-2])  # Assumes the label is encoded in the folder name
+        label = self.label_dict[self.image_files[idx]]
+        label = [ord(char) % 3755 for char in label]
+        label = torch.tensor(label)
 
         return image, label
 
-class SimpleCNN(nn.Module):
-    def __init__(self, input_channels, num_classes):
-        super(SimpleCNN, self).__init__()
-        self.conv1 = nn.Conv2d(input_channels, 32, kernel_size=3, stride=1, padding=1)
-        self.relu = nn.ReLU()
-        self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.flatten = nn.Flatten()
-        self.fc1 = nn.Linear(32 * 16 * 16, 64)
-        self.fc2 = nn.Linear(64, num_classes)
+
+class NeuralNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.model = nn.Sequential(
+            nn.Conv2d(1, 16, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Dropout(p=0.5),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Dropout(p=0.5),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Dropout(p=0.5),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Flatten(),
+            nn.Linear(64 * 4 * 4, 4096),
+            nn.ReLU(),
+            nn.Dropout(p=0.5),
+            nn.Linear(4096, 512),
+            nn.ReLU(),
+            nn.Linear(512, 128),
+            nn.ReLU(),
+            nn.Linear(128, 3755)
+        )
+
+        for layer in self.model:
+            if isinstance(layer, nn.Linear):
+                nn.init.xavier_uniform_(layer.weight)
+                nn.init.constant_(layer.bias, 0.0)
+                layer.weight.data = layer.weight.data.float()
+                layer.bias.data = layer.bias.data.float()
 
     def forward(self, x):
-        x = self.conv1(x)
-        x = self.relu(x)
-        x = self.maxpool(x)
-        x = self.flatten(x)
-        x = self.fc1(x)
-        x = self.relu(x)
-        x = self.fc2(x)
-        return x
+        return self.model(x)
 
 
 if __name__ == '__main__':
 
-    # Specify the paths to your train, validation, and test folders
-    train_folder = './gnt-jpg/train'
-    val_folder = './gnt-jpg/val'
-    test_folder = './gnt-jpg/test'
+    # Paths to train, validation, and test jpg folders
+    train_jpg_folder = './data/gnt-jpg/train'
+    val_jpg_folder = './data/gnt-jpg/validate'
+    test_jpg_folder = './data/gnt-jpg/test'
+
+    # Paths to train, validation, and test gnt folders
+    train_gnt_folder = './data/gnt/train'
+    val_gnt_folder = './data/gnt/validate'
+    test_gnt_folder = './data/gnt/test'
+
+    # Create label dictionary
+    label_dict_train = create_label_dict(train_gnt_folder)
+    label_dict_val = create_label_dict(val_gnt_folder)
+    label_dict_test = create_label_dict(test_gnt_folder)
 
     # Create datasets and dataloaders
-    train_dataset = CustomDataset(train_folder)
-    val_dataset = CustomDataset(val_folder)
-    test_dataset = CustomDataset(test_folder)
+    train_dataset = ChineseDataset(train_jpg_folder, label_dict_train)
+    val_dataset = ChineseDataset(val_jpg_folder, label_dict_val)
+    test_dataset = ChineseDataset(test_jpg_folder, label_dict_test)
 
     batch_size = 64
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
     test_loader = DataLoader(test_dataset, batch_size=batch_size)
 
-
-
-    x_train_tensor = torch.Tensor(x_train).permute(0, 3, 1, 2)
-    y_train_tensor = torch.Tensor(y_train).type(torch.long)
-    x_val_tensor = torch.Tensor(x_val).permute(0, 3, 1, 2)
-    y_val_tensor = torch.Tensor(y_val).type(torch.long)
-    x_test_tensor = torch.Tensor(x_test).permute(0, 3, 1, 2)
-    y_test_tensor = torch.Tensor(y_test).type(torch.long)
-
-    # Instantiate the model
-    input_channels = x_train_tensor.shape[1]
-    num_classes = 3755
-    model = SimpleCNN(input_channels, num_classes)
+    # Create model
+    model = NeuralNetwork().to('cuda')
 
     # Define loss function and optimizer
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    loss_fn = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0005)
 
     # Training loop
-    num_epochs = 10
+    num_epochs = 40
 
     for epoch in range(num_epochs):
         model.train()
+        i = 0
         for inputs, labels in train_loader:
+            outputs = model(inputs.float().to('cuda'))
+            loss = loss_fn(outputs, labels.squeeze().to('cuda'))
+
             optimizer.zero_grad()
-            outputs = model(inputs)
-            loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
+
+            if i % 1000 == 0:
+                print(f"Completed {i} batches")
+            i += 1
+        print("Starting validation")
 
         # Validation
         model.eval()
@@ -135,19 +198,25 @@ if __name__ == '__main__':
 
         with torch.no_grad():
             for inputs, labels in val_loader:
-                outputs = model(inputs)
-                loss = criterion(outputs, labels)
+                if total == 3712:
+                    break
+
+                outputs = model(inputs.float().to('cuda'))
+                loss = loss_fn(outputs, labels.squeeze().to('cuda'))
                 val_loss += loss.item()
 
                 _, predicted = outputs.max(1)
-                total += labels.size(0)
-                correct += predicted.eq(labels).sum().item()
+                total += batch_size
+                correct += predicted.eq(labels.to('cuda')).sum().item()
 
         avg_val_loss = val_loss / len(val_loader)
         val_accuracy = correct / total
 
         print(
             f'Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}, Validation Loss: {avg_val_loss:.4f}, Validation Accuracy: {val_accuracy:.2%}')
+
+    # Save the model
+    torch.save(model.state_dict(), './models/hccr-model.pth')
 
     # Test the model
     model.eval()
@@ -156,10 +225,12 @@ if __name__ == '__main__':
 
     with torch.no_grad():
         for inputs, labels in test_loader:
-            outputs = model(inputs)
+            if test_total == 14976:
+                break
+            outputs = model(inputs.float().to('cuda'))
             _, predicted = outputs.max(1)
-            test_total += labels.size(0)
-            test_correct += predicted.eq(labels).sum().item()
+            test_total += batch_size
+            test_correct += predicted.eq(labels.to('cuda')).sum().item()
 
     test_accuracy = test_correct / test_total
     print(f'Test Accuracy: {test_accuracy:.2%}')
