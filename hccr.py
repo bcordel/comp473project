@@ -130,7 +130,7 @@ class ImageClassifier(nn.Module):
 
 
 # Instance of the neural network, loss, optimizer
-clf = ImageClassifier().to('cuda')
+clf = ImageClassifier().to(torch.device('cuda'))
 opt = Adam(clf.parameters(), lr=1e-3)
 loss_fn = nn.CrossEntropyLoss()
 
@@ -149,8 +149,8 @@ if __name__ == "__main__":
         for batch in dataset:
             print(f"Batch {batch_num} started")
             X, y = batch['image'], batch['label']
-            X = X.float().to('cuda')
-            y = y.squeeze(dim=1).to('cuda')
+            X = X.float().to(torch.device('cuda'))
+            y = y.squeeze(dim=1).to(torch.device('cuda'))
             yhat = clf(X)
             loss = loss_fn(yhat, y)
 
@@ -182,7 +182,7 @@ if __name__ == "__main__":
             total_val_samples = 0
 
             for val_batch in validation_dataset:
-                val_X, val_y = val_batch['image'].float().to('cuda'), val_batch['label'].squeeze(dim=1).to('cuda')
+                val_X, val_y = val_batch['image'].float().to(torch.device('cuda')), val_batch['label'].squeeze(dim=1).to(torch.device('cuda'))
                 val_yhat = clf(val_X)
                 val_loss = loss_fn(val_yhat, val_y)
 

@@ -8,8 +8,10 @@ import os
 import numpy as np
 import time
 
-torch.cuda.set_per_process_memory_fraction(0.9)
+
 torch.cuda.empty_cache()
+torch.cuda.device('cuda:0')
+
 
 def sobel_gradient(image):
     # Compute gradient using Sobel operator
@@ -113,17 +115,27 @@ class NeuralNetwork(nn.Module):
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Conv2d(100, 150, kernel_size=3, stride=1, padding=1),
             nn.LeakyReLU(negative_slope=1/3),
+            nn.Dropout(p=0.1),
+            nn.Conv2d(150, 200, kernel_size=3, stride=1, padding=1),
+            nn.LeakyReLU(negative_slope=1/3),
             nn.Dropout(p=0.2),
             nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(200, 250, kernel_size=3, stride=1, padding=1),
+            nn.LeakyReLU(negative_slope=1/3),
+            nn.Dropout(p=0.2),
+            nn.Conv2d(250, 300, kernel_size=3, stride=1, padding=1),
+            nn.LeakyReLU(negative_slope=1/3),
+            nn.Dropout(p=0.3),
+            nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Flatten(),
-            nn.Linear(2400, 4096),
+            nn.Linear(1200, 1600),
             nn.LeakyReLU(negative_slope=1/3),
-            nn.Dropout(p=0.4),
-            nn.Linear(4096, 512),
+            nn.Dropout(p=0.5),
+            nn.Linear(1600, 900),
             nn.LeakyReLU(negative_slope=1/3),
-            nn.Linear(512, 128),
+            nn.Linear(900, 200),
             nn.LeakyReLU(negative_slope=1/3),
-            nn.Linear(128, 3755)
+            nn.Linear(200, 3755)
         )
 
         for layer in self.model:
@@ -181,11 +193,9 @@ if __name__ == '__main__':
         for inputs, labels in train_loader:
             outputs = model(inputs.float().to('cuda'))
             loss = loss_fn(outputs, labels.squeeze().to('cuda'))
-
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-
             if i % 1000 == 0:
                 print(f"Completed {i} batches")
             i += 1
@@ -236,4 +246,4 @@ if __name__ == '__main__':
             test_correct += predicted.eq(labels.to('cuda')).sum().item()
 
     test_accuracy = test_correct / test_total
-    print(f'Test Accuracy: {test_accuracy:.2%}')
+    print(f'Test Accuracy: {test_accuracy:.2%}') 
