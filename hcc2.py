@@ -6,6 +6,7 @@ import torch.optim as optim
 import cv2
 import os
 import numpy as np
+import time
 
 torch.cuda.set_per_process_memory_fraction(0.9)
 torch.cuda.empty_cache()
@@ -103,26 +104,25 @@ class NeuralNetwork(nn.Module):
     def __init__(self):
         super().__init__()
         self.model = nn.Sequential(
-            nn.Conv2d(1, 16, kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
-            nn.Dropout(p=0.5),
+            nn.Conv2d(1, 50, kernel_size=3, stride=1, padding=1),
+            nn.LeakyReLU(negative_slope=1/3),
             nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
-            nn.Dropout(p=0.5),
+            nn.Conv2d(50, 100, kernel_size=3, stride=1, padding=1),
+            nn.LeakyReLU(negative_slope=1/3),
+            nn.Dropout(p=0.1),
             nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
-            nn.Dropout(p=0.5),
+            nn.Conv2d(100, 150, kernel_size=3, stride=1, padding=1),
+            nn.LeakyReLU(negative_slope=1/3),
+            nn.Dropout(p=0.2),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Flatten(),
-            nn.Linear(64 * 4 * 4, 4096),
-            nn.ReLU(),
-            nn.Dropout(p=0.5),
+            nn.Linear(2400, 4096),
+            nn.LeakyReLU(negative_slope=1/3),
+            nn.Dropout(p=0.4),
             nn.Linear(4096, 512),
-            nn.ReLU(),
+            nn.LeakyReLU(negative_slope=1/3),
             nn.Linear(512, 128),
-            nn.ReLU(),
+            nn.LeakyReLU(negative_slope=1/3),
             nn.Linear(128, 3755)
         )
 
@@ -172,9 +172,10 @@ if __name__ == '__main__':
     optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0005)
 
     # Training loop
-    num_epochs = 40
+    num_epochs = 60
 
     for epoch in range(num_epochs):
+        start_time = time.time()
         model.train()
         i = 0
         for inputs, labels in train_loader:
@@ -188,7 +189,6 @@ if __name__ == '__main__':
             if i % 1000 == 0:
                 print(f"Completed {i} batches")
             i += 1
-        print("Starting validation")
 
         # Validation
         model.eval()
@@ -212,11 +212,14 @@ if __name__ == '__main__':
         avg_val_loss = val_loss / len(val_loader)
         val_accuracy = correct / total
 
+        end_time = time.time()
+
+        print(f"Epoch {epoch + 1} completed in {end_time - start_time} seconds")
         print(
             f'Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}, Validation Loss: {avg_val_loss:.4f}, Validation Accuracy: {val_accuracy:.2%}')
 
     # Save the model
-    torch.save(model.state_dict(), './models/hccr-model.pth')
+    torch.save(model.state_dict(), './models/hccr-model2.0.pth')
 
     # Test the model
     model.eval()
