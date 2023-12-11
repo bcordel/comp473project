@@ -1,0 +1,361 @@
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 1 completed in 95.07859182357788 seconds
+Epoch [1/60], Loss: 7.8321, Validation Loss: 7.6483, Validation Accuracy: 6.87%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 2 completed in 89.27215909957886 seconds
+Epoch [2/60], Loss: 7.3351, Validation Loss: 7.2108, Validation Accuracy: 5.01%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 3 completed in 86.46011018753052 seconds
+Epoch [3/60], Loss: 5.2194, Validation Loss: 5.8855, Validation Accuracy: 8.38%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 4 completed in 86.45365715026855 seconds
+Epoch [4/60], Loss: 3.4532, Validation Loss: 3.9832, Validation Accuracy: 23.57%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 5 completed in 86.34010696411133 seconds
+Epoch [5/60], Loss: 2.5608, Validation Loss: 3.5051, Validation Accuracy: 32.19%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 6 completed in 86.15497970581055 seconds
+Epoch [6/60], Loss: 3.3538, Validation Loss: 3.8556, Validation Accuracy: 30.25%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 7 completed in 86.3156898021698 seconds
+Epoch [7/60], Loss: 3.2156, Validation Loss: 3.6999, Validation Accuracy: 34.08%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 8 completed in 86.31753945350647 seconds
+Epoch [8/60], Loss: 2.5018, Validation Loss: 2.9756, Validation Accuracy: 40.98%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 9 completed in 86.38471937179565 seconds
+Epoch [9/60], Loss: 2.9171, Validation Loss: 3.0371, Validation Accuracy: 41.30%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 10 completed in 86.26503849029541 seconds
+Epoch [10/60], Loss: 2.0746, Validation Loss: 3.0037, Validation Accuracy: 42.43%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 11 completed in 86.55115556716919 seconds
+Epoch [11/60], Loss: 2.8010, Validation Loss: 3.2295, Validation Accuracy: 41.68%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 12 completed in 86.29177808761597 seconds
+Epoch [12/60], Loss: 2.6835, Validation Loss: 3.0747, Validation Accuracy: 42.59%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 13 completed in 86.20858573913574 seconds
+Epoch [13/60], Loss: 1.9960, Validation Loss: 2.6744, Validation Accuracy: 44.42%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 14 completed in 86.31667375564575 seconds
+Epoch [14/60], Loss: 2.4923, Validation Loss: 3.0214, Validation Accuracy: 41.57%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 15 completed in 86.27568054199219 seconds
+Epoch [15/60], Loss: 2.7480, Validation Loss: 3.5363, Validation Accuracy: 38.44%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 16 completed in 86.30947947502136 seconds
+Epoch [16/60], Loss: 2.2235, Validation Loss: 2.7039, Validation Accuracy: 45.55%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 17 completed in 86.25768566131592 seconds
+Epoch [17/60], Loss: 3.1892, Validation Loss: 2.9952, Validation Accuracy: 42.59%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 18 completed in 86.54612135887146 seconds
+Epoch [18/60], Loss: 1.8663, Validation Loss: 2.6362, Validation Accuracy: 46.42%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 19 completed in 86.25917077064514 seconds
+Epoch [19/60], Loss: 2.1644, Validation Loss: 2.6648, Validation Accuracy: 45.91%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 20 completed in 86.49427080154419 seconds
+Epoch [20/60], Loss: 2.1207, Validation Loss: 2.8005, Validation Accuracy: 45.04%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 21 completed in 86.2831597328186 seconds
+Epoch [21/60], Loss: 1.8631, Validation Loss: 2.6692, Validation Accuracy: 47.01%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 22 completed in 86.47294878959656 seconds
+Epoch [22/60], Loss: 2.3891, Validation Loss: 2.8983, Validation Accuracy: 43.16%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 23 completed in 86.48962759971619 seconds
+Epoch [23/60], Loss: 2.1899, Validation Loss: 2.6007, Validation Accuracy: 46.42%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 24 completed in 86.82427668571472 seconds
+Epoch [24/60], Loss: 2.0294, Validation Loss: 2.6115, Validation Accuracy: 46.98%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 25 completed in 90.73162508010864 seconds
+Epoch [25/60], Loss: 1.8628, Validation Loss: 2.5771, Validation Accuracy: 45.99%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 26 completed in 89.88831424713135 seconds
+Epoch [26/60], Loss: 1.9440, Validation Loss: 2.6425, Validation Accuracy: 47.06%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 27 completed in 86.21481418609619 seconds
+Epoch [27/60], Loss: 2.1201, Validation Loss: 2.4816, Validation Accuracy: 47.52%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 28 completed in 86.05795669555664 seconds
+Epoch [28/60], Loss: 2.2784, Validation Loss: 2.8398, Validation Accuracy: 43.37%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 29 completed in 86.41478657722473 seconds
+Epoch [29/60], Loss: 2.4709, Validation Loss: 3.3413, Validation Accuracy: 39.04%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 30 completed in 85.89629983901978 seconds
+Epoch [30/60], Loss: 1.9858, Validation Loss: 2.7271, Validation Accuracy: 45.80%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 31 completed in 85.9350836277008 seconds
+Epoch [31/60], Loss: 2.5602, Validation Loss: 2.8001, Validation Accuracy: 44.80%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 32 completed in 85.91270089149475 seconds
+Epoch [32/60], Loss: 2.0328, Validation Loss: 2.5234, Validation Accuracy: 47.31%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 33 completed in 85.88462948799133 seconds
+Epoch [33/60], Loss: 2.0743, Validation Loss: 2.8779, Validation Accuracy: 44.10%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 34 completed in 85.84435629844666 seconds
+Epoch [34/60], Loss: 2.0323, Validation Loss: 2.8500, Validation Accuracy: 43.05%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 35 completed in 85.99250507354736 seconds
+Epoch [35/60], Loss: 2.2043, Validation Loss: 2.7924, Validation Accuracy: 44.99%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 36 completed in 86.00163316726685 seconds
+Epoch [36/60], Loss: 2.3356, Validation Loss: 2.8833, Validation Accuracy: 44.23%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 37 completed in 86.54345560073853 seconds
+Epoch [37/60], Loss: 2.3094, Validation Loss: 2.7343, Validation Accuracy: 46.12%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 38 completed in 86.49191951751709 seconds
+Epoch [38/60], Loss: 2.1008, Validation Loss: 2.7086, Validation Accuracy: 45.91%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 39 completed in 86.64139771461487 seconds
+Epoch [39/60], Loss: 2.1450, Validation Loss: 2.5823, Validation Accuracy: 47.71%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 40 completed in 86.48373866081238 seconds
+Epoch [40/60], Loss: 1.9934, Validation Loss: 2.7390, Validation Accuracy: 44.64%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 41 completed in 86.61344289779663 seconds
+Epoch [41/60], Loss: 1.7719, Validation Loss: 2.4681, Validation Accuracy: 48.73%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 42 completed in 86.71537947654724 seconds
+Epoch [42/60], Loss: 2.1039, Validation Loss: 2.4515, Validation Accuracy: 47.98%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 43 completed in 86.49648475646973 seconds
+Epoch [43/60], Loss: 2.7068, Validation Loss: 3.0121, Validation Accuracy: 40.68%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 44 completed in 86.42300701141357 seconds
+Epoch [44/60], Loss: 2.2296, Validation Loss: 2.4501, Validation Accuracy: 50.03%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 45 completed in 86.43659472465515 seconds
+Epoch [45/60], Loss: 2.2853, Validation Loss: 2.7913, Validation Accuracy: 43.91%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 46 completed in 86.41034412384033 seconds
+Epoch [46/60], Loss: 2.6029, Validation Loss: 2.9830, Validation Accuracy: 42.30%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 47 completed in 86.38924646377563 seconds
+Epoch [47/60], Loss: 2.0040, Validation Loss: 2.8041, Validation Accuracy: 45.18%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 48 completed in 86.29640102386475 seconds
+Epoch [48/60], Loss: 1.8323, Validation Loss: 2.4483, Validation Accuracy: 48.76%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 49 completed in 87.06329202651978 seconds
+Epoch [49/60], Loss: 1.7856, Validation Loss: 2.5351, Validation Accuracy: 47.60%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 50 completed in 86.46039295196533 seconds
+Epoch [50/60], Loss: 1.8121, Validation Loss: 2.6515, Validation Accuracy: 47.06%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 51 completed in 86.538729429245 seconds
+Epoch [51/60], Loss: 2.3304, Validation Loss: 3.0174, Validation Accuracy: 42.11%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 52 completed in 86.37839317321777 seconds
+Epoch [52/60], Loss: 1.9796, Validation Loss: 2.5486, Validation Accuracy: 47.52%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 53 completed in 86.5804512500763 seconds
+Epoch [53/60], Loss: 1.8584, Validation Loss: 2.7519, Validation Accuracy: 45.72%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 54 completed in 86.57756352424622 seconds
+Epoch [54/60], Loss: 1.8378, Validation Loss: 2.5145, Validation Accuracy: 47.93%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 55 completed in 86.38306522369385 seconds
+Epoch [55/60], Loss: 2.0864, Validation Loss: 2.4885, Validation Accuracy: 48.46%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 56 completed in 86.58619379997253 seconds
+Epoch [56/60], Loss: 1.7257, Validation Loss: 2.7036, Validation Accuracy: 45.37%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 57 completed in 86.3161244392395 seconds
+Epoch [57/60], Loss: 2.2793, Validation Loss: 2.6188, Validation Accuracy: 47.66%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 58 completed in 86.47887539863586 seconds
+Epoch [58/60], Loss: 1.9481, Validation Loss: 2.4081, Validation Accuracy: 49.19%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 59 completed in 86.76151156425476 seconds
+Epoch [59/60], Loss: 2.0500, Validation Loss: 2.5275, Validation Accuracy: 47.44%
+Completed 0 batches
+Completed 1000 batches
+Completed 2000 batches
+Completed 3000 batches
+Epoch 60 completed in 86.56703972816467 seconds
+Epoch [60/60], Loss: 1.9473, Validation Loss: 2.5737, Validation Accuracy: 47.23%
+Test Accuracy: 61.00%

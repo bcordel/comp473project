@@ -13,34 +13,6 @@ torch.cuda.empty_cache()
 torch.cuda.device('cuda:0')
 
 
-def sobel_gradient(image):
-    # Compute gradient using Sobel operator
-    gradient_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
-    gradient_y = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
-
-    # Compute gradient magnitude
-    magnitude = np.sqrt(gradient_x ** 2 + gradient_y ** 2)
-
-    return magnitude
-
-
-# Function to preprocess the images
-def preprocess(image):
-    # Equalize the image
-    equalized_image = cv2.equalizeHist(image)
-
-    # Apply Gaussian blur
-    blurred_image = cv2.GaussianBlur(equalized_image, (3, 3), 0)
-
-    # Normalize the image
-    normalized_image = blurred_image / 255.0
-
-    # Compute Sobel gradient
-    magnitude = sobel_gradient(normalized_image)
-
-    return magnitude
-
-
 def create_label_dict(dir_name):
     label_dict = {}
 
@@ -79,7 +51,6 @@ def create_label_dict(dir_name):
     return label_dict
 
 
-# Custom dataset class
 class ChineseDataset(Dataset):
     def __init__(self, folder_path, label_dict):
         self.folder_path = folder_path
@@ -100,6 +71,32 @@ class ChineseDataset(Dataset):
         label = torch.tensor(label)
 
         return image, label
+
+    def sobel_gradient(image):
+        # Compute gradient using Sobel operator
+        gradient_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
+        gradient_y = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
+
+        # Compute gradient magnitude
+        magnitude = np.sqrt(gradient_x ** 2 + gradient_y ** 2)
+
+        return magnitude
+
+    # Function to preprocess the images
+    def preprocess(self, image):
+        # Equalize the image
+        equalized_image = cv2.equalizeHist(image)
+
+        # Apply Gaussian blur
+        blurred_image = cv2.GaussianBlur(equalized_image, (3, 3), 0)
+
+        # Normalize the image
+        normalized_image = blurred_image / 255.0
+
+        # Compute Sobel gradient
+        magnitude = image.sobel_gradient(normalized_image)
+
+        return magnitude
 
 
 class NeuralNetwork(nn.Module):
