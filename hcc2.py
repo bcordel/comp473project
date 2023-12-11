@@ -13,44 +13,6 @@ torch.cuda.empty_cache()
 torch.cuda.device('cuda:0')
 
 
-def create_label_dict(dir_name):
-    label_dict = {}
-
-    for file in os.listdir(dir_name):
-        file_name = os.path.join(dir_name, file)
-        num = 0
-        try:
-            with open(file_name, 'rb') as image_file:
-                # Get length of file
-                file_length = os.path.getsize(file_name)
-
-                # While current cursor spot is less than length
-                while image_file.tell() < file_length:
-                    # Skip length of image (we get this from w x h)
-                    image_file.read(4)
-
-                    # Get label
-                    label = image_file.read(2)
-
-                    # Get image dimensions
-                    width = int.from_bytes(image_file.read(2), byteorder='little')
-                    height = int.from_bytes(image_file.read(2), byteorder='little')
-
-                    # Get byte array of gray-scale image
-                    image_file.read(width * height)
-
-                    # Save label
-                    entry_name = f"{os.path.basename(file_name)[:4]}-{num}.jpg"
-                    label_dict[entry_name] = label.decode("GBK")
-                    num += 1
-
-        except FileNotFoundError as e:
-            print(f"Error: {e}")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-    return label_dict
-
-
 class ChineseDataset(Dataset):
     def __init__(self, folder_path, label_dict):
         self.folder_path = folder_path
@@ -64,7 +26,7 @@ class ChineseDataset(Dataset):
     def __getitem__(self, idx):
         image_path = os.path.join(self.folder_path, self.image_files[idx])
         image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-        image = preprocess(image)
+        image = self.preprocess(image)
         image = self.transform(image)
         label = self.label_dict[self.image_files[idx]]
         label = [ord(char) % 3755 for char in label]
@@ -72,7 +34,7 @@ class ChineseDataset(Dataset):
 
         return image, label
 
-    def sobel_gradient(image):
+    def sobel_gradient(self, image):
         # Compute gradient using Sobel operator
         gradient_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
         gradient_y = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
@@ -94,9 +56,9 @@ class ChineseDataset(Dataset):
         normalized_image = blurred_image / 255.0
 
         # Compute Sobel gradient
-        magnitude = image.sobel_gradient(normalized_image)
+        magnitude_image = self.sobel_gradient(normalized_image)
 
-        return magnitude
+        return magnitude_image
 
 
 class NeuralNetwork(nn.Module):
