@@ -1,3 +1,13 @@
+"""
+HCC2
+The following code trains a neural network on the ICDAR-2013 offline Chinese characters database. It is a 9 layer convolutional network and outputs the save file to ./models/save_name. 
+Make sure to adjust the source directory for both .gnt files and .jpg files as the .gnt files are required for label extraction and .jpg creation if not already done. 
+See the readme for steps on creating .jpg files. 
+
+Input: none
+Output: trained model 
+"""
+
 import torch
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
