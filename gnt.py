@@ -1,3 +1,9 @@
+"""
+gnt
+This code reads and extracts label and image information from .gnt files to .jpg and dictionary type objects in python. 
+This code must be run first if you want to train the network to generate the .jpgs. 
+"""
+
 import numpy as np
 import os
 from PIL import Image
