@@ -20,3 +20,5 @@ Run main in hcc2.py to the desired number of epochs.
 Note that hcc2.py uses 'cuda' by default, if you would like to change this, be sure to change the device variable in main.
 Currently the directmap.py does not work as hoped so the preprocess step in hcc2 performs some basic preprocessing then calculates the magnitude of the gradient by the sobel operator for edge detection. 
 
+You can download the gnt files from: http://www.nlpr.ia.ac.cn/databases/handwriting/Download.html
+
