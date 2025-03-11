@@ -1,5 +1,5 @@
 # Handwritten Chinese Character Recognition (HCCR) 
-This code aims to perform HCCR on the ICDAR-2013 dataset. The code here was written by Briac Cordelle, Samuel something and Andrew Robinson. 
+This code aims to perform HCCR on the ICDAR-2013 dataset. The code here was written by Briac Cordelle, Samuel Jusmin and Andrew Robinson. 
 
 The following files are defined: 
 hcc2.py - trains a neural network using data found in the ./data/ directory
